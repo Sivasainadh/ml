@@ -1,0 +1,15 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as mlt
+from sklearn.preprocessing import LabelEncoder,OneHotEncoder,MinMaxScaler,StandardScaler
+from sklearn.model_selection import train_test_split
+
+ds=pd.read_csv('Carseats.csv')
+ds
+
+x=ds.drop("Sales",axis=1)
+
+a=ds.Sales.mean()
+y=pd.cut(ds.Sales,bins=(0,a,15),labels=['bad','good'])
+y
+
