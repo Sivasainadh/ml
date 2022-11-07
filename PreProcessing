@@ -1,0 +1,39 @@
+import numpy as np
+import pandas as pd
+from sklearn.impute import SimpleImputer
+from sklearn.preprocessing import LabelEncoder,OneHotEncoder
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import MinMaxScaler,StandardScaler
+import matplotlib.pyplot as plt
+
+dt=pd.read_csv('Carseats.csv')
+dt
+
+
+y=dt.iloc[:,0]
+x=dt.drop("Sales", axis='columns')
+x
+
+y
+
+le=LabelEncoder()
+x['US']=le.fit_transform(x['US'])
+x['Urban']=le.fit_transform(x['Urban'])
+x
+
+ohe=OneHotEncoder()
+x1=pd.DataFrame(ohe.fit_transform(x[['ShelveLoc']]).toarray())
+x1
+
+x=x.drop('ShelveLoc', axis=1)
+
+x=x.join(x1)
+x
+
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.2,random_state=0)
+x_train
+
+
+sc=StandardScaler()
+sc.fit_transform(x_train.iloc[:,0:7])
+sc.fit_transform(x_test.iloc[:,0:7])
