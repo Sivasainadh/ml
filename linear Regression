@@ -1,0 +1,49 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sb
+from sklearn import metrics
+from sklearn.preprocessing import LabelEncoder,OneHotEncoder,MinMaxScaler,RobustScaler
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+from sklearn.linear_model import LogisticRegression,LinearRegression
+
+ds=pd.read_csv('Carseats.csv')
+
+ds
+
+x=ds.iloc[:,1:11].values
+x
+y=ds.iloc[:,0].values
+
+
+ds.corr()
+ds
+
+k=ds[['Advertising']]
+l=ds[['Sales']]
+
+x_train,x_test,y_train,y_test=train_test_split(k,l,test_size=0.2,random_state=0)
+
+lr=LinearRegression()
+lr.fit(x_train,y_train)
+y_predict=lr.predict(x_test)
+
+plt.scatter(x_train,y_train,color='red')
+plt.plot(x_train,lr.predict(x_train),color='green')
+plt.title("Training_dataset")
+plt.xlabel("Advertising")
+plt.ylabel("Sales")
+plt.show()
+
+
+plt.scatter(x_test,y_test,color='red')
+plt.plot(x_train,lr.predict(x_train),color='green')
+plt.title("Testing dataset")
+plt.xlabel("Critric acid")
+plt.ylabel("Quality")
+plt.show()
+
+print(metrics.mean_absolute_error(y_test,y_predict))
+print(metrics.mean_squared_error(y_test,y_predict))
+print(np.sqrt(metrics.mean_squared_error(y_test,y_predict)))
